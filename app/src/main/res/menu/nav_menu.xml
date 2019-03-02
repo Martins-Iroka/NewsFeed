@@ -1,4 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/top_headlines"
+        android:icon="@drawable/ic_nav_top_headlines"
+        android:title="@string/top_headline" />
 
+    <item android:title="@string/category">
+        <menu>
+            <item
+                android:id="@+id/category_business"
+                android:icon="@drawable/ic_nav_business"
+                android:title="@string/category_business" />
+            <item
+                android:id="@+id/category_entertainment"
+                android:icon="@drawable/ic_nav_entertainment"
+                android:title="@string/category_entertainment" />
+            <item
+                android:id="@+id/category_health"
+                android:icon="@drawable/ic_nav_health"
+                android:title="@string/category_health" />
+            <item
+                android:id="@+id/category_science"
+                android:icon="@drawable/ic_nav_science"
+                android:title="@string/category_science" />
+            <item
+                android:id="@+id/category_sport"
+                android:icon="@drawable/ic_nav_sport"
+                android:title="@string/category_sport" />
+            <item
+                android:id="@+id/category_technology"
+                android:icon="@drawable/ic_nav_technology"
+                android:title="@string/category_technology" />
+        </menu>
+    </item>
+    <item android:title="@string/settings">
+        <menu>
+            <item
+                android:id="@+id/settings"
+                android:icon="@drawable/ic_nav_settings"
+                android:title="@string/settings" />
+        </menu>
+    </item>
 </menu>
