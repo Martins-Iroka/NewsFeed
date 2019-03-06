@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,9 +35,9 @@ public class HealthNews extends Fragment implements LoaderManager.LoaderCallback
     private static final int NEWSFEED_LOADER_ID = 3;
 
     private NewsAdapter mNewsAdapter;
+    private SwipeRefreshLayout mRefreshLayout;
     private RecyclerView mRecyclerView;
     private TextView mEmptyTextView;
-    private ProgressBar mProgressBar;
 
     @Nullable
     @Override
@@ -46,11 +47,16 @@ public class HealthNews extends Fragment implements LoaderManager.LoaderCallback
         mRecyclerView = view.findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+        mRefreshLayout = view.findViewById(R.id.swipe);
+        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                checkNetwork();
+            }
+        });
+        mRefreshLayout.setRefreshing(true);
 
         mEmptyTextView = view.findViewById(R.id.empty_text_message);
-
-        mProgressBar = view.findViewById(R.id.progressBar);
-        mProgressBar.setVisibility(View.VISIBLE);
 
         updateView();
         checkNetwork();
@@ -72,7 +78,6 @@ public class HealthNews extends Fragment implements LoaderManager.LoaderCallback
         if (networkInfo != null && networkInfo.isConnected()) {
             LoaderManager loaderManager = getLoaderManager();
             mEmptyTextView.setVisibility(View.GONE);
-            mProgressBar.setVisibility(View.VISIBLE);
 
             if (loaderManager.getLoader(NEWSFEED_LOADER_ID) == null) {
                 loaderManager.initLoader(NEWSFEED_LOADER_ID, null, HealthNews.this);
@@ -80,7 +85,7 @@ public class HealthNews extends Fragment implements LoaderManager.LoaderCallback
                 loaderManager.restartLoader(NEWSFEED_LOADER_ID, null, HealthNews.this);
             }
         } else {
-            mProgressBar.setVisibility(View.GONE);
+            mRefreshLayout.setRefreshing(false);
 
             mEmptyTextView.setText(R.string.no_internet);
         }
@@ -94,7 +99,7 @@ public class HealthNews extends Fragment implements LoaderManager.LoaderCallback
 
     @Override
     public void onLoadFinished(@NonNull Loader<List<NewsInfo>> loader, List<NewsInfo> data) {
-        mProgressBar.setVisibility(View.GONE);
+        mRefreshLayout.setRefreshing(false);
 
         mEmptyTextView.setText(R.string.no_news);
 

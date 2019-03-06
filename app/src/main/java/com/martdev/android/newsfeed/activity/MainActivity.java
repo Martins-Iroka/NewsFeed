@@ -1,4 +1,4 @@
-package com.martdev.android.newsfeed;
+package com.martdev.android.newsfeed.activity;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.martdev.android.newsfeed.R;
 import com.martdev.android.newsfeed.fragment.BusinessNews;
 import com.martdev.android.newsfeed.fragment.EntertainmentNews;
 import com.martdev.android.newsfeed.fragment.HealthNews;
