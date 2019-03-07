@@ -1,9 +1,12 @@
 package com.martdev.android.newsfeed.fragment;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,7 +19,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.martdev.android.newsfeed.R;
@@ -29,8 +31,8 @@ import java.util.List;
 
 public class HealthNews extends Fragment implements LoaderManager.LoaderCallbacks<List<NewsInfo>> {
 
-    private static final String NEWS_URL = "https://newsapi.org/v2/top-headlines?" +
-            "country=ng&category=health&apiKey=8bd6245749de492ba64956f4132143db";
+    private static final String NEWS_URL = "https://newsapi.org/v2/top-headlines";
+    private static final String NEWS_API = "8bd6245749de492ba64956f4132143db";
 
     private static final int NEWSFEED_LOADER_ID = 3;
 
@@ -94,7 +96,21 @@ public class HealthNews extends Fragment implements LoaderManager.LoaderCallback
     @NonNull
     @Override
     public Loader<List<NewsInfo>> onCreateLoader(int id, @Nullable Bundle args) {
-        return new NewsFeedLoader(getActivity(), NEWS_URL);
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String country = sharedPreferences.getString(
+                getString(R.string.news_location_key),
+                getString(R.string.news_location_default_value)
+        );
+
+        Uri baseUri = Uri.parse(NEWS_URL);
+        Uri.Builder uriBuilder = baseUri.buildUpon();
+
+        uriBuilder.appendQueryParameter("country", country);
+        uriBuilder.appendQueryParameter("category", "health");
+        uriBuilder.appendQueryParameter("pageSize", "50");
+        uriBuilder.appendQueryParameter("apiKey", NEWS_API);
+        return new NewsFeedLoader(getActivity(), uriBuilder.toString());
     }
 
     @Override

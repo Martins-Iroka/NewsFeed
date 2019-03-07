@@ -118,17 +118,13 @@ public class QueryUtils {
 
                 String newsSource = source.getString("name");
 
-                String newsAuthor = object.getString("author");
-                if (newsAuthor.equals("null")) {
-                    newsAuthor = "No author";
-                }
 
                 String title = object.getString("title");
                 String url = object.getString("url");
                 String urlImage = object.getString("urlToImage");
                 String publishedAt = object.getString("publishedAt");
 
-                NewsInfo newsInfo = new NewsInfo(urlImage, newsAuthor, title, newsSource,
+                NewsInfo newsInfo = new NewsInfo(urlImage, title, newsSource,
                         publishedAt, url);
 
                 newsInfoList.add(newsInfo);

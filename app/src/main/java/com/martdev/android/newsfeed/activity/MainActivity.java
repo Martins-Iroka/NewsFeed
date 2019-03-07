@@ -1,5 +1,6 @@
 package com.martdev.android.newsfeed.activity;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -67,7 +68,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         FragmentManager fm = getSupportFragmentManager();
-        Fragment fragment;
+        Fragment fragment = null;
+        Intent intent = null;
 
         switch (id) {
             case R.id.category_business:
@@ -100,13 +102,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getSupportActionBar().setSubtitle(mSubTitle);
                 fragment = new TechNews();
                 break;
+            case R.id.settings:
+                intent = new Intent(this, SettingsActivity.class);
+                break;
             default:
                 fragment = new TopHeadlines();
                 mSubTitle = getString(R.string.top_headline);
                 getSupportActionBar().setSubtitle(mSubTitle);
         }
 
-        fm.beginTransaction().replace(R.id.fragment_container, fragment).commit();
+        if (fragment != null) {
+            fm.beginTransaction().replace(R.id.fragment_container, fragment).commit();
+        } else {
+            startActivity(intent);
+        }
 
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;

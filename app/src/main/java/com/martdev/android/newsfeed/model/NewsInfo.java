@@ -2,15 +2,13 @@ package com.martdev.android.newsfeed.model;
 
 public class NewsInfo {
     private String mImageURL;
-    private String mAuthor;
     private String mTitle;
     private String mSource;
     private String mPublishedDate;
     private String mURL;
 
-    public NewsInfo(String imageURL, String author, String title, String source, String publishedDate, String URL) {
+    public NewsInfo(String imageURL, String title, String source, String publishedDate, String URL) {
         mImageURL = imageURL;
-        mAuthor = author;
         mTitle = title;
         mSource = source;
         mPublishedDate = publishedDate;
@@ -19,10 +17,6 @@ public class NewsInfo {
 
     public String getImageURL() {
         return mImageURL;
-    }
-
-    public String getAuthor() {
-        return mAuthor;
     }
 
     public String getTitle() {

@@ -18,4 +18,23 @@
     <string name="no_author_message">No author</string>
     <string name="no_news">No News available</string>
     <string name="no_internet">No Internet Connection</string>
+    <string name="send_link">Send link via</string>
+    <string name="settings_news_location">News base on Country</string>
+    <string name="news_location_key" translatable="false">country</string>
+    <string name="news_location_default_value" translatable="false">@string/news_location_ng_value</string>
+
+    <string name="news_location_ng_label">Nigeria</string>
+    <string name="news_location_ng_value" translatable="false">ng</string>
+
+    <string name="news_location_us_label">United States</string>
+    <string name="news_location_us_value" translatable="false">us</string>
+
+    <string name="news_location_gb_label">United Kingdom</string>
+    <string name="news_location_gb_value" translatable="false">gb</string>
+
+    <string name="news_location_ca_label">Canada</string>
+    <string name="news_location_ca_value" translatable="false">ca</string>
+
+    <string name="news_location_au_label">Australia</string>
+    <string name="news_location_au_value" translatable="false">au</string>
 </resources>

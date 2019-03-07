@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="setting_news_location_labels">
+        <item>@string/news_location_ng_label</item>
+        <item>@string/news_location_us_label</item>
+        <item>@string/news_location_gb_label</item>
+        <item>@string/news_location_ca_label</item>
+        <item>@string/news_location_au_label</item>
+    </string-array>
+
+    <string-array name="setting_news_location_values">
+        <item>@string/news_location_ng_value</item>
+        <item>@string/news_location_us_value</item>
+        <item>@string/news_location_gb_value</item>
+        <item>@string/news_location_ca_value</item>
+        <item>@string/news_location_au_value</item>
+    </string-array>
+</resources>
