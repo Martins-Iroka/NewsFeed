@@ -5,7 +5,7 @@ news api to get recent news. I also made room for category - such as business ne
 Android frameworks were used to make the app user-friendly, such as:
   1. RecyclerView - to display the news feeds.
   2. Navigation Drawer - for the options/category.
-  3. SwipeToRefresh - to refresh the recyclerView with new feeds.
-  4. WebView - to show the news information using the news url.
+  3. SwipeToRefresh - to refresh the recyclerView with news feeds.
+  4. WebView - to show news information using the news url.
   5. AsyncLoader - to handle background task such as connecting to the internet and fetching news feeds.
   6. Picasso - an external library used to handle loading of image url from the internet.
