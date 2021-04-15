@@ -1,16 +1,18 @@
 package com.martdev.android.newsfeed.activity;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import com.google.android.material.navigation.NavigationView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
+
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.martdev.android.newsfeed.R;
@@ -21,6 +23,7 @@ import com.martdev.android.newsfeed.fragment.ScienceNews;
 import com.martdev.android.newsfeed.fragment.SportNews;
 import com.martdev.android.newsfeed.fragment.TechNews;
 import com.martdev.android.newsfeed.fragment.TopHeadlines;
+import com.newsfeed.shared.Greeting;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -56,6 +59,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             getSupportActionBar().setSubtitle(R.string.top_headline);
             fm.beginTransaction().add(R.id.fragment_container, fragment).commit();
         }
+
+        Log.i("Login Activity", "Hello from shared module: " + (new Greeting().greeting()));
     }
 
     @Override

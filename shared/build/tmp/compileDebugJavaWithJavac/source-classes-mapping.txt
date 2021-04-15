@@ -1,0 +1,2 @@
+com/newsfeed/shared/BuildConfig.java
+ com.newsfeed.shared.BuildConfig
