@@ -1,0 +1,17 @@
+CREATE TABLE NewsFeed (
+id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+author TEXT NOT NULL,
+title TEXT NOT NULL,
+urlToImage TEXT,
+content TEXT NOT NULL
+);
+
+selectAll:
+SELECT * FROM NewsFeed;
+
+selectById:
+SELECT * FROM NewsFeed WHERE id = ?;
+
+insertBreed:
+INSERT OR IGNORE INTO NewsFeed(id, author, title, urlToImage, content)
+VALUES (?,?,?,?,?);

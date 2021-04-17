@@ -3,6 +3,8 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
+    id("kotlinx-serialization")
+    id("com.squareup.sqldelight")
 }
 
 kotlin {
@@ -14,22 +16,49 @@ kotlin {
             }
         }
     }
+
+    val ktor_version = "1.5.3"
+    val coroutines_version = "1.4.3"
+    val sqlDelightVersion = "1.4.4"
+
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                implementation("io.ktor:ktor-client-core:$ktor_version")
+                implementation("io.ktor:ktor-client-serialization:$ktor_version")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version")
+                implementation("co.touchlab:stately-common:1.1.4")
+                implementation("com.squareup.sqldelight:runtime:$sqlDelightVersion")
+                implementation("io.ktor:ktor-client-logging:$ktor_version")
+                implementation("com.squareup.sqldelight:coroutines-extensions:$sqlDelightVersion")
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
             }
         }
-        val androidMain by getting
+        val androidMain by getting {
+            dependencies {
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version")
+                implementation("io.ktor:ktor-client-android:$ktor_version")
+                implementation("com.squareup.sqldelight:android-driver:$sqlDelightVersion")
+            }
+        }
         val androidTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
                 implementation("junit:junit:4.13")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version")
             }
         }
-        val iosMain by getting
+        val iosMain by getting {
+            dependencies {
+                implementation("io.ktor:ktor-client-ios:$ktor_version")
+                implementation("com.squareup.sqldelight:native-driver:$sqlDelightVersion")
+            }
+        }
         val iosTest by getting
     }
 }
@@ -57,3 +86,9 @@ val packForXcode by tasks.creating(Sync::class) {
     into(targetDir)
 }
 tasks.getByName("build").dependsOn(packForXcode)
+
+sqldelight {
+    database("NewsFeedDb") {
+        packageName = "com.newsfeed.shared.db"
+    }
+}
