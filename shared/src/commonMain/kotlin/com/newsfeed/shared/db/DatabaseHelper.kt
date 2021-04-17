@@ -10,11 +10,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 
 class DatabaseHelper(
-    sqlDriver: SqlDriver,
+    sqlDriver: DatabaseDriverFactory,
     private val backgroundDispatcher: CoroutineDispatcher
 ) {
 
-    private val dbRef = NewsFeedDb(sqlDriver)
+    private val dbRef = NewsFeedDb(sqlDriver.createDriver())
 
     fun selectAllItems(): Flow<List<NewsFeed>> =
         dbRef.newsFeedQueries

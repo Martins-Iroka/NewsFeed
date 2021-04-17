@@ -20,6 +20,7 @@ kotlin {
     val ktor_version = "1.5.3"
     val coroutines_version = "1.4.3"
     val sqlDelightVersion = "1.4.4"
+    val multiplatform_settings = "0.7.4"
 
     sourceSets {
         val commonMain by getting {
@@ -31,12 +32,15 @@ kotlin {
                 implementation("com.squareup.sqldelight:runtime:$sqlDelightVersion")
                 implementation("io.ktor:ktor-client-logging:$ktor_version")
                 implementation("com.squareup.sqldelight:coroutines-extensions:$sqlDelightVersion")
+                implementation("com.russhwolf:multiplatform-settings-no-arg:$multiplatform_settings")
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.1.1")
             }
         }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
+                implementation("com.russhwolf:multiplatform-settings-test:$multiplatform_settings")
             }
         }
         val androidMain by getting {
