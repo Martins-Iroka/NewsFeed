@@ -1,5 +1,6 @@
 package com.newsfeed.shared.remoteSource
 
+import co.touchlab.stately.ensureNeverFrozen
 import com.newsfeed.shared.model.NewsInfo
 import io.ktor.client.*
 import io.ktor.client.features.json.*
@@ -22,6 +23,10 @@ class NewsApi {
             logger = Logger.DEFAULT
             level = LogLevel.ALL
         }
+    }
+
+    init {
+        ensureNeverFrozen()
     }
 
     suspend fun getTopHeadlines() = client.get<NewsInfo>(

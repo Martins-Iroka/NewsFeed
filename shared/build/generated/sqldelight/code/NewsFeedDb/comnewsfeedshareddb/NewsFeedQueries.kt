@@ -27,11 +27,13 @@ interface NewsFeedQueries : Transacter {
 
   fun selectById(id: Long): Query<NewsFeed>
 
-  fun insertBreed(
+  fun insertNewsFeed(
     id: Long?,
     author: String,
     title: String,
     urlToImage: String?,
     content: String
   )
+
+  fun deleteAll()
 }

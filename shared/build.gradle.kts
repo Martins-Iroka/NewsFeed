@@ -17,10 +17,19 @@ kotlin {
         }
     }
 
+    val onPhone = System.getenv("SDK_NAME")?.startsWith("iphoneos") ?: false
+    if (onPhone) {
+        iosArm64("ios")
+    } else {
+        iosX64("ios")
+    }
+
     val ktor_version = "1.5.3"
     val coroutines_version = "1.4.3"
     val sqlDelightVersion = "1.4.4"
     val multiplatform_settings = "0.7.4"
+    val kotlinVersion = "1.4.32"
+    val androidX_version = "1.3.0"
 
     sourceSets {
         val commonMain by getting {
@@ -41,6 +50,7 @@ kotlin {
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
                 implementation("com.russhwolf:multiplatform-settings-test:$multiplatform_settings")
+                implementation("app.cash.turbine:turbine:0.4.1")
             }
         }
         val androidMain by getting {
@@ -55,6 +65,12 @@ kotlin {
                 implementation(kotlin("test-junit"))
                 implementation("junit:junit:4.13")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version")
+                implementation("org.jetbrains.kotlin:kotlin-test:$kotlinVersion")
+                implementation("androidx.test:core:$androidX_version")
+                implementation("androidx.test.ext:junit:1.1.2")
+                implementation("androidx.test:runner:$androidX_version")
+                implementation("androidx.test:rules:$androidX_version")
+                implementation("org.robolectric:robolectric:4.5.1")
             }
         }
         val iosMain by getting {

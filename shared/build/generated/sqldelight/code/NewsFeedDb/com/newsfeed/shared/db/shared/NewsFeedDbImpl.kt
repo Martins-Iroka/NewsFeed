@@ -113,14 +113,14 @@ private class NewsFeedQueriesImpl(
     )
   }
 
-  override fun insertBreed(
+  override fun insertNewsFeed(
     id: Long?,
     author: String,
     title: String,
     urlToImage: String?,
     content: String
   ) {
-    driver.execute(-968821737, """
+    driver.execute(1325564302, """
     |INSERT OR IGNORE INTO NewsFeed(id, author, title, urlToImage, content)
     |VALUES (?,?,?,?,?)
     """.trimMargin(), 5) {
@@ -130,7 +130,13 @@ private class NewsFeedQueriesImpl(
       bindString(4, urlToImage)
       bindString(5, content)
     }
-    notifyQueries(-968821737, {database.newsFeedQueries.selectAll +
+    notifyQueries(1325564302, {database.newsFeedQueries.selectAll +
+        database.newsFeedQueries.selectById})
+  }
+
+  override fun deleteAll() {
+    driver.execute(659382482, """DELETE FROM NewsFeed""", 0)
+    notifyQueries(659382482, {database.newsFeedQueries.selectAll +
         database.newsFeedQueries.selectById})
   }
 

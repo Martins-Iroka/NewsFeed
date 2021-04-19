@@ -12,6 +12,9 @@ SELECT * FROM NewsFeed;
 selectById:
 SELECT * FROM NewsFeed WHERE id = ?;
 
-insertBreed:
+insertNewsFeed:
 INSERT OR IGNORE INTO NewsFeed(id, author, title, urlToImage, content)
 VALUES (?,?,?,?,?);
+
+deleteAll:
+DELETE FROM NewsFeed;

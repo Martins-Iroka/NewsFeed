@@ -10,11 +10,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 
 class DatabaseHelper(
-    sqlDriver: DatabaseDriverFactory,
+    sqlDriver: SqlDriver,
     private val backgroundDispatcher: CoroutineDispatcher
 ) {
 
-    private val dbRef = NewsFeedDb(sqlDriver.createDriver())
+    private val dbRef = NewsFeedDb(sqlDriver)
 
     fun selectAllItems(): Flow<List<NewsFeed>> =
         dbRef.newsFeedQueries
@@ -30,12 +30,18 @@ class DatabaseHelper(
             .mapToOne()
             .flowOn(backgroundDispatcher)
 
-    suspend fun insertBreeds(breeds: List<NewsFeed>) {
+    suspend fun insertNewsFeed(breeds: List<NewsFeed>) {
         dbRef.transactionWithContext(backgroundDispatcher) {
             breeds.forEach { news ->
                 dbRef.newsFeedQueries
-                    .insertBreed(null, news.author, news.title, news.urlToImage, news.content)
+                    .insertNewsFeed(null, news.author, news.title, news.urlToImage, news.content)
             }
+        }
+    }
+
+    suspend fun deleteAllNewsFeed() {
+        dbRef.transactionWithContext(backgroundDispatcher) {
+            dbRef.newsFeedQueries.deleteAll()
         }
     }
 }

@@ -4,6 +4,7 @@ import com.newsfeed.shared.db.DatabaseDriverFactory
 import com.newsfeed.shared.db.DatabaseHelper
 import com.newsfeed.shared.remoteSource.NewsApi
 import com.russhwolf.settings.Settings
+import com.squareup.sqldelight.db.SqlDriver
 import comnewsfeedshareddb.NewsFeed
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -11,7 +12,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.datetime.Clock
 
-class NewsFeedRepo(databaseDriverFactory: DatabaseDriverFactory) {
+class NewsFeedRepo(databaseDriverFactory: SqlDriver) {
     private val db = DatabaseHelper(databaseDriverFactory, Dispatchers.Default)
     private val remote = NewsApi()
     private val settings = Settings()
@@ -33,7 +34,7 @@ class NewsFeedRepo(databaseDriverFactory: DatabaseDriverFactory) {
                 DataState.Empty -> {
                     emit(remoteNewsFeed)
                 }
-                is DataState.Success -> db.insertBreeds(remoteNewsFeed.data)
+                is DataState.Success -> db.insertNewsFeed(remoteNewsFeed.data)
                 is DataState.Error -> emit(remoteNewsFeed)
                 DataState.Loading -> {}
             }
@@ -49,7 +50,7 @@ class NewsFeedRepo(databaseDriverFactory: DatabaseDriverFactory) {
                 }
             }
 
-    suspend fun getNewsFromNetwork(currentTimeMS: Long): DataState<List<NewsFeed>> {
+    suspend fun getNewsFromNetwork(currentTimeMS: Long = 0L): DataState<List<NewsFeed>> {
         return try {
             val newsFeed = remote.getTopHeadlines().articles
             settings.putLong(DB_TIMESTAMP_KEY, currentTimeMS)
@@ -58,7 +59,7 @@ class NewsFeedRepo(databaseDriverFactory: DatabaseDriverFactory) {
             } else {
                 DataState.Success(
                     newsFeed.map {
-                        NewsFeed(0L, it.author?: "", it.title, it.urlToImage, it.content)
+                        NewsFeed(0L, it.author?: "", it.title, it.urlToImage, it.content?: "")
                     }
                 )
             }
@@ -73,4 +74,10 @@ class NewsFeedRepo(databaseDriverFactory: DatabaseDriverFactory) {
 
         return lastDownloadTimeMS + oneHourMS < currentTimeMS
     }
+
+    fun getNewsById(id: Long): Flow<DataState<NewsFeed>> =
+        db.selectById(id)
+            .mapNotNull { news ->
+                DataState.Success(news)
+            }
 }
