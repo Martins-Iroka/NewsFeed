@@ -3,7 +3,7 @@ id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
 author TEXT NOT NULL,
 title TEXT NOT NULL,
 urlToImage TEXT,
-content TEXT NOT NULL
+url TEXT NOT NULL
 );
 
 selectAll:
@@ -13,7 +13,7 @@ selectById:
 SELECT * FROM NewsFeed WHERE id = ?;
 
 insertNewsFeed:
-INSERT OR IGNORE INTO NewsFeed(id, author, title, urlToImage, content)
+INSERT OR IGNORE INTO NewsFeed(id, author, title, urlToImage, url)
 VALUES (?,?,?,?,?);
 
 deleteAll:

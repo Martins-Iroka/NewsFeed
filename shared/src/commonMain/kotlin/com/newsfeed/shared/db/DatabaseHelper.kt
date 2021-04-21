@@ -34,7 +34,7 @@ class DatabaseHelper(
         dbRef.transactionWithContext(backgroundDispatcher) {
             breeds.forEach { news ->
                 dbRef.newsFeedQueries
-                    .insertNewsFeed(null, news.author, news.title, news.urlToImage, news.content)
+                    .insertNewsFeed(null, news.author, news.title, news.urlToImage, news.url)
             }
         }
     }

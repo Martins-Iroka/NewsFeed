@@ -37,7 +37,7 @@ private class NewsFeedDbImpl(
           |author TEXT NOT NULL,
           |title TEXT NOT NULL,
           |urlToImage TEXT,
-          |content TEXT NOT NULL
+          |url TEXT NOT NULL
           |)
           """.trimMargin(), 0)
     }
@@ -64,7 +64,7 @@ private class NewsFeedQueriesImpl(
     author: String,
     title: String,
     urlToImage: String?,
-    content: String
+    url: String
   ) -> T): Query<T> = Query(-697883679, selectAll, driver, "NewsFeed.sq", "selectAll",
       "SELECT * FROM NewsFeed") { cursor ->
     mapper(
@@ -76,13 +76,13 @@ private class NewsFeedQueriesImpl(
     )
   }
 
-  override fun selectAll(): Query<NewsFeed> = selectAll { id, author, title, urlToImage, content ->
+  override fun selectAll(): Query<NewsFeed> = selectAll { id, author, title, urlToImage, url ->
     NewsFeed(
       id,
       author,
       title,
       urlToImage,
-      content
+      url
     )
   }
 
@@ -91,7 +91,7 @@ private class NewsFeedQueriesImpl(
     author: String,
     title: String,
     urlToImage: String?,
-    content: String
+    url: String
   ) -> T): Query<T> = SelectByIdQuery(id) { cursor ->
     mapper(
       cursor.getLong(0)!!,
@@ -103,13 +103,13 @@ private class NewsFeedQueriesImpl(
   }
 
   override fun selectById(id: Long): Query<NewsFeed> = selectById(id) { id_, author, title,
-      urlToImage, content ->
+      urlToImage, url ->
     NewsFeed(
       id_,
       author,
       title,
       urlToImage,
-      content
+      url
     )
   }
 
@@ -118,17 +118,17 @@ private class NewsFeedQueriesImpl(
     author: String,
     title: String,
     urlToImage: String?,
-    content: String
+    url: String
   ) {
     driver.execute(1325564302, """
-    |INSERT OR IGNORE INTO NewsFeed(id, author, title, urlToImage, content)
+    |INSERT OR IGNORE INTO NewsFeed(id, author, title, urlToImage, url)
     |VALUES (?,?,?,?,?)
     """.trimMargin(), 5) {
       bindLong(1, id)
       bindString(2, author)
       bindString(3, title)
       bindString(4, urlToImage)
-      bindString(5, content)
+      bindString(5, url)
     }
     notifyQueries(1325564302, {database.newsFeedQueries.selectAll +
         database.newsFeedQueries.selectById})

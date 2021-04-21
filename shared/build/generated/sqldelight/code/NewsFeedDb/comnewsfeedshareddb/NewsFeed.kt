@@ -8,7 +8,7 @@ data class NewsFeed(
   val author: String,
   val title: String,
   val urlToImage: String?,
-  val content: String
+  val url: String
 ) {
   override fun toString(): String = """
   |NewsFeed [
@@ -16,7 +16,7 @@ data class NewsFeed(
   |  author: $author
   |  title: $title
   |  urlToImage: $urlToImage
-  |  content: $content
+  |  url: $url
   |]
   """.trimMargin()
 }

@@ -1,2 +1,1 @@
 com.newsfeed.shared
-string androidx_startup

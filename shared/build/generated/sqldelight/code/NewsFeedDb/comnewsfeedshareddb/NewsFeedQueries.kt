@@ -12,7 +12,7 @@ interface NewsFeedQueries : Transacter {
     author: String,
     title: String,
     urlToImage: String?,
-    content: String
+    url: String
   ) -> T): Query<T>
 
   fun selectAll(): Query<NewsFeed>
@@ -22,7 +22,7 @@ interface NewsFeedQueries : Transacter {
     author: String,
     title: String,
     urlToImage: String?,
-    content: String
+    url: String
   ) -> T): Query<T>
 
   fun selectById(id: Long): Query<NewsFeed>
@@ -32,7 +32,7 @@ interface NewsFeedQueries : Transacter {
     author: String,
     title: String,
     urlToImage: String?,
-    content: String
+    url: String
   )
 
   fun deleteAll()

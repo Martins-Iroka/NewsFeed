@@ -2,7 +2,7 @@
 //  NewsFeedApp.swift
 //  NewsFeed
 //
-//  Created by TellerOne on 4/15/21.
+//  Created by Martins on 4/15/21.
 //
 
 import SwiftUI

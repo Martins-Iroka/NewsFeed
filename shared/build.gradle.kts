@@ -25,9 +25,8 @@ kotlin {
     }
 
     val ktor_version = "1.5.3"
-    val coroutines_version = "1.4.3"
+    val coroutines_version = "1.4.3-native-mt"
     val sqlDelightVersion = "1.4.4"
-    val multiplatform_settings = "0.7.4"
     val kotlinVersion = "1.4.32"
     val androidX_version = "1.3.0"
 
@@ -37,19 +36,15 @@ kotlin {
                 implementation("io.ktor:ktor-client-core:$ktor_version")
                 implementation("io.ktor:ktor-client-serialization:$ktor_version")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version")
-                implementation("co.touchlab:stately-common:1.1.4")
                 implementation("com.squareup.sqldelight:runtime:$sqlDelightVersion")
                 implementation("io.ktor:ktor-client-logging:$ktor_version")
                 implementation("com.squareup.sqldelight:coroutines-extensions:$sqlDelightVersion")
-                implementation("com.russhwolf:multiplatform-settings-no-arg:$multiplatform_settings")
-                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.1.1")
             }
         }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
-                implementation("com.russhwolf:multiplatform-settings-test:$multiplatform_settings")
                 implementation("app.cash.turbine:turbine:0.4.1")
             }
         }
