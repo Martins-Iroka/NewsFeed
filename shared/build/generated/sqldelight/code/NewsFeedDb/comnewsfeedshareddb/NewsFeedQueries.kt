@@ -5,9 +5,10 @@ import com.squareup.sqldelight.Transacter
 import kotlin.Any
 import kotlin.Long
 import kotlin.String
+import kotlin.Unit
 
-interface NewsFeedQueries : Transacter {
-  fun <T : Any> selectAll(mapper: (
+public interface NewsFeedQueries : Transacter {
+  public fun <T : Any> selectAll(mapper: (
     id: Long,
     author: String,
     title: String,
@@ -15,9 +16,9 @@ interface NewsFeedQueries : Transacter {
     url: String
   ) -> T): Query<T>
 
-  fun selectAll(): Query<NewsFeed>
+  public fun selectAll(): Query<NewsFeed>
 
-  fun <T : Any> selectById(id: Long, mapper: (
+  public fun <T : Any> selectById(id: Long, mapper: (
     id: Long,
     author: String,
     title: String,
@@ -25,15 +26,15 @@ interface NewsFeedQueries : Transacter {
     url: String
   ) -> T): Query<T>
 
-  fun selectById(id: Long): Query<NewsFeed>
+  public fun selectById(id: Long): Query<NewsFeed>
 
-  fun insertNewsFeed(
+  public fun insertNewsFeed(
     id: Long?,
     author: String,
     title: String,
     urlToImage: String?,
     url: String
-  )
+  ): Unit
 
-  fun deleteAll()
+  public fun deleteAll(): Unit
 }

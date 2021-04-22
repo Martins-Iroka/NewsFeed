@@ -31,7 +31,7 @@ class IOSNewsFeedVM {
         scope.launch {
             println("getNewsFeed called")
             flowOf(
-                newsFeedRepo.refreshedNewsFeedIfStale(),
+                newsFeedRepo.refreshedNewsFeed(),
                 newsFeedRepo.getNewsFromCache()
             ).flattenMerge().collect { dataState ->
                 when(dataState) {

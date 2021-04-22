@@ -15,7 +15,7 @@ class MainScope(private val mainContext: CoroutineContext) :
         printThrowable(throwable)
         showError(throwable)
     }
-    
+
     private fun showError(t: Throwable) {
         println(t)
     }

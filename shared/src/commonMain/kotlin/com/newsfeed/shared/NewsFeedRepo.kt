@@ -13,7 +13,7 @@ class NewsFeedRepo(databaseDriverFactory: SqlDriver) {
     private val db = DatabaseHelper(databaseDriverFactory, Dispatchers.Default)
     private val remote = NewsApi()
 
-    fun refreshedNewsFeedIfStale(forced: Boolean = false): Flow<DataState<List<NewsFeed>>> = flow {
+    fun refreshedNewsFeed(forced: Boolean = false): Flow<DataState<List<NewsFeed>>> = flow {
         emit(DataState.Loading)
         val remoteNewsFeed: DataState<List<NewsFeed>>
         if (forced) {

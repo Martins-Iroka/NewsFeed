@@ -21,14 +21,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activity.NewsPageActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:parentActivityName=".activity.MainActivity" />
-        <activity
-            android:name=".activity.SettingsActivity"
-            android:label="@string/settings"
-            android:parentActivityName=".activity.MainActivity"/>
     </application>
 
 </manifest>

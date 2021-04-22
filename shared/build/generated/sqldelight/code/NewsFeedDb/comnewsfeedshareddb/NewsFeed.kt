@@ -3,14 +3,14 @@ package comnewsfeedshareddb
 import kotlin.Long
 import kotlin.String
 
-data class NewsFeed(
-  val id: Long,
-  val author: String,
-  val title: String,
-  val urlToImage: String?,
-  val url: String
+public data class NewsFeed(
+  public val id: Long,
+  public val author: String,
+  public val title: String,
+  public val urlToImage: String?,
+  public val url: String
 ) {
-  override fun toString(): String = """
+  public override fun toString(): String = """
   |NewsFeed [
   |  id: $id
   |  author: $author

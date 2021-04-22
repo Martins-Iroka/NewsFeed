@@ -29,7 +29,7 @@ class NewsFeedRepoTest : BaseTest() {
     @Test
     fun refreshedDataBase() {
         runTest {
-           newsFeedRepo.refreshedNewsFeedIfStale(true).collectLatest {
+           newsFeedRepo.refreshedNewsFeed(true).collectLatest {
                when(it) {
                    is DataState.Success -> {
                        val v = newsFeedRepo.getNewsFromCache().first()

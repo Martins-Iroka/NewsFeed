@@ -3,15 +3,16 @@ package com.newsfeed.shared.db.shared
 import com.newsfeed.shared.db.NewsFeedDb
 import com.squareup.sqldelight.Query
 import com.squareup.sqldelight.TransacterImpl
+import com.squareup.sqldelight.`internal`.copyOnWriteList
 import com.squareup.sqldelight.db.SqlCursor
 import com.squareup.sqldelight.db.SqlDriver
-import com.squareup.sqldelight.internal.copyOnWriteList
 import comnewsfeedshareddb.NewsFeed
 import comnewsfeedshareddb.NewsFeedQueries
 import kotlin.Any
 import kotlin.Int
 import kotlin.Long
 import kotlin.String
+import kotlin.Unit
 import kotlin.collections.MutableList
 import kotlin.jvm.JvmField
 import kotlin.reflect.KClass
@@ -24,13 +25,13 @@ internal fun KClass<NewsFeedDb>.newInstance(driver: SqlDriver): NewsFeedDb = New
 private class NewsFeedDbImpl(
   driver: SqlDriver
 ) : TransacterImpl(driver), NewsFeedDb {
-  override val newsFeedQueries: NewsFeedQueriesImpl = NewsFeedQueriesImpl(this, driver)
+  public override val newsFeedQueries: NewsFeedQueriesImpl = NewsFeedQueriesImpl(this, driver)
 
-  object Schema : SqlDriver.Schema {
-    override val version: Int
+  public object Schema : SqlDriver.Schema {
+    public override val version: Int
       get() = 1
 
-    override fun create(driver: SqlDriver) {
+    public override fun create(driver: SqlDriver): Unit {
       driver.execute(null, """
           |CREATE TABLE NewsFeed (
           |id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
@@ -42,11 +43,11 @@ private class NewsFeedDbImpl(
           """.trimMargin(), 0)
     }
 
-    override fun migrate(
+    public override fun migrate(
       driver: SqlDriver,
       oldVersion: Int,
       newVersion: Int
-    ) {
+    ): Unit {
     }
   }
 }
@@ -59,7 +60,7 @@ private class NewsFeedQueriesImpl(
 
   internal val selectById: MutableList<Query<*>> = copyOnWriteList()
 
-  override fun <T : Any> selectAll(mapper: (
+  public override fun <T : Any> selectAll(mapper: (
     id: Long,
     author: String,
     title: String,
@@ -76,7 +77,8 @@ private class NewsFeedQueriesImpl(
     )
   }
 
-  override fun selectAll(): Query<NewsFeed> = selectAll { id, author, title, urlToImage, url ->
+  public override fun selectAll(): Query<NewsFeed> = selectAll { id, author, title, urlToImage,
+      url ->
     NewsFeed(
       id,
       author,
@@ -86,7 +88,7 @@ private class NewsFeedQueriesImpl(
     )
   }
 
-  override fun <T : Any> selectById(id: Long, mapper: (
+  public override fun <T : Any> selectById(id: Long, mapper: (
     id: Long,
     author: String,
     title: String,
@@ -102,7 +104,7 @@ private class NewsFeedQueriesImpl(
     )
   }
 
-  override fun selectById(id: Long): Query<NewsFeed> = selectById(id) { id_, author, title,
+  public override fun selectById(id: Long): Query<NewsFeed> = selectById(id) { id_, author, title,
       urlToImage, url ->
     NewsFeed(
       id_,
@@ -113,13 +115,13 @@ private class NewsFeedQueriesImpl(
     )
   }
 
-  override fun insertNewsFeed(
+  public override fun insertNewsFeed(
     id: Long?,
     author: String,
     title: String,
     urlToImage: String?,
     url: String
-  ) {
+  ): Unit {
     driver.execute(1325564302, """
     |INSERT OR IGNORE INTO NewsFeed(id, author, title, urlToImage, url)
     |VALUES (?,?,?,?,?)
@@ -134,7 +136,7 @@ private class NewsFeedQueriesImpl(
         database.newsFeedQueries.selectById})
   }
 
-  override fun deleteAll() {
+  public override fun deleteAll(): Unit {
     driver.execute(659382482, """DELETE FROM NewsFeed""", 0)
     notifyQueries(659382482, {database.newsFeedQueries.selectAll +
         database.newsFeedQueries.selectById})
@@ -142,14 +144,14 @@ private class NewsFeedQueriesImpl(
 
   private inner class SelectByIdQuery<out T : Any>(
     @JvmField
-    val id: Long,
+    public val id: Long,
     mapper: (SqlCursor) -> T
   ) : Query<T>(selectById, mapper) {
-    override fun execute(): SqlCursor = driver.executeQuery(-159516270,
+    public override fun execute(): SqlCursor = driver.executeQuery(-159516270,
         """SELECT * FROM NewsFeed WHERE id = ?""", 1) {
       bindLong(1, id)
     }
 
-    override fun toString(): String = "NewsFeed.sq:selectById"
+    public override fun toString(): String = "NewsFeed.sq:selectById"
   }
 }
